@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/service/users.service';
+import { UserDocument } from 'src/users/user.schema';
 import { JwtPayload } from '../models/payload.model';
 import { AuthService } from '../service/auth.service';
 
