@@ -8,7 +8,7 @@ import { User, UserDocument } from '../user.schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  public async create(user: RegisterUserDto) {
+  public async create(user: User) {
     return this.userModel.create(user);
   }
 

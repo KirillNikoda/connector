@@ -18,7 +18,7 @@ export class User {
   avatar: string;
 
   @Prop({ type: Date, default: Date.now })
-  date: Date;
+  date?: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

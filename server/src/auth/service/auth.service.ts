@@ -12,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { JwtPayload } from '../models/payload.model';
+import * as gravatar from 'gravatar';
 
 @Injectable()
 export class AuthService {
@@ -21,9 +22,9 @@ export class AuthService {
   ) {}
 
   public async register(registerUserDto: RegisterUserDto): Promise<User> {
-    const userExists = await this.usersService.findByEmail(
-      registerUserDto.email,
-    );
+    const { email, password } = registerUserDto;
+
+    const userExists = await this.usersService.findByEmail(email);
 
     if (userExists) {
       throw new BadRequestException('User with that email already exists.');
@@ -31,11 +32,19 @@ export class AuthService {
 
     const salt = await bcrypt.genSalt();
 
-    const hashedPassword = await bcrypt.hash(registerUserDto.password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    registerUserDto.password = hashedPassword;
+    const avatar = gravatar.url(email, {
+      s: '200',
+      r: 'pg',
+      d: 'mm',
+    });
 
-    const createdUser = await this.usersService.create(registerUserDto);
+    const createdUser = await this.usersService.create({
+      ...registerUserDto,
+      password: hashedPassword,
+      avatar: avatar,
+    });
 
     return createdUser;
   }
