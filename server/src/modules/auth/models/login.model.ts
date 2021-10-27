@@ -1,4 +1,4 @@
-import { User } from 'src/users/user.schema';
+import { User } from 'src/modules/users/user.schema';
 
 export interface LoginModel {
   user: User;
