@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { JwtGuard } from 'src/modules/auth/guards/jwt.guard';
+import { User } from 'src/modules/users/user.schema';
 import { CreateProfileDto } from '../dto/create-profile.dto';
 import { ProfileService } from '../service/profile.service';
 
@@ -16,5 +25,13 @@ export class ProfileController {
 
   @UseGuards(JwtGuard)
   @Post()
-  public createProfile(@Body() createProfileDto: CreateProfileDto) {}
+  public createProfile(
+    @Req() request,
+    @Body() createProfileDto: CreateProfileDto,
+  ) {
+    return this.profileService.createProfile(
+      createProfileDto,
+      request.user._id,
+    );
+  }
 }

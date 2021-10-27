@@ -1,4 +1,4 @@
-import { isNotEmpty, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { Experience } from '../models/experience.model';
 import { Social } from '../models/social.model';
 

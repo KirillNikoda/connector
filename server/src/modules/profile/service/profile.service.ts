@@ -25,5 +25,22 @@ export class ProfileService {
     return profile;
   }
 
-  public async createProfile(createProfileDto: CreateProfileDto) {}
+  public async createProfile(createProfileDto: CreateProfileDto, userId: any) {
+    const profile = await this.profileModel.findOne({
+      user: userId,
+    });
+
+    if (!profile) {
+      return await this.profileModel.create({
+        ...createProfileDto,
+        user: userId,
+      });
+    }
+
+    return await this.profileModel.findByIdAndUpdate(
+      profile._id,
+      createProfileDto,
+      { new: true },
+    );
+  }
 }
