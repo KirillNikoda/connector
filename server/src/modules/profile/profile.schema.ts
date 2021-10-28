@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
-import { User } from 'src/users/user.schema';
+import { User } from 'src/modules/users/user.schema';
 import { Experience } from './models/experience.model';
 import { Social } from './models/social.model';
 
